@@ -6,7 +6,8 @@ import ast
 import copy
 import inspect
 from typing import get_type_hints
-from openai import OpenAI
+from openai import OpenAI, AzureOpenAI
+
 
 ### Helper Functions ###
 
@@ -348,9 +349,17 @@ def chat(system_prompt: str, user_prompt: str, model: str = 'gpt-3.5-turbo', tem
             except Exception as e:
                 model = 'gpt-3.5-turbo-1106'
                 
-        client = OpenAI()
+        # client = OpenAI()
+        azure_endpoint = "https://cursor-gpt-4.openai.azure.com"
+        api_version="2024-02-15-preview"
+        client = AzureOpenAI(
+        azure_endpoint=azure_endpoint,
+        api_version=api_version,
+        api_key = os.environ["AZURE_OPENAI_API_KEY"],
+        )
         response = client.chat.completions.create(
-            model=model,
+            model="pjf-dpo-turbo-35",
+            # model="cursor-gpt-4"
             temperature = temperature,
             messages=[
                 {"role": "system", "content": system_prompt},
