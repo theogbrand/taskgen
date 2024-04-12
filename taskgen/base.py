@@ -359,7 +359,7 @@ def chat(system_prompt: str, user_prompt: str, model: str = 'gpt-3.5-turbo', tem
         )
         response = client.chat.completions.create(
             model="pjf-dpo-turbo-35",
-            # model="cursor-gpt-4"
+            # model="cursor-gpt-4",
             temperature = temperature,
             messages=[
                 {"role": "system", "content": system_prompt},
